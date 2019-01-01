@@ -80,7 +80,7 @@ public class LinkedTaskList extends TaskList implements Cloneable {
 
         return current.value;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -89,46 +89,46 @@ public class LinkedTaskList extends TaskList implements Cloneable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-            
+
         LinkedTaskList other = (LinkedTaskList) obj;
-        
+
         LinkedTaskList current = head;
         LinkedTaskList current2 = other.head;
-        
+
         while (current != null) {
             if (!current.value.equals(current2.value)) {
                 return false;
             }
-            
+
             current = current.next;
             current2 = current2.next;
         }
-        
+
         return true;
     }
-    
+
     @Override
     public int hashCode() {
         int result = 1;
-        
+
         LinkedTaskList current = head;
-        
+
         while (current != null) {
             result = 31 * result + current.value.hashCode();
 
             current = current.next;
         }
-        
+
         return result;
     }
-    
+
     @Override
     public LinkedTaskList clone() {
-        LinkedTaskList copiedOne = new LinkedTaskList();  
-        
+        LinkedTaskList copiedOne = new LinkedTaskList();
+
         LinkedTaskList current = head;
         LinkedTaskList current2 = new LinkedTaskList();
-        
+
         while (current != null) {
             current2.value = current.value;
             copiedOne.add(current2.value);
@@ -175,7 +175,7 @@ public class LinkedTaskList extends TaskList implements Cloneable {
             if (next == null) {
                 throw new NoSuchElementException();
             }
-            
+
             Task temp = (Task) next.value;
             current = next;
             next = next.next;
@@ -184,13 +184,13 @@ public class LinkedTaskList extends TaskList implements Cloneable {
         }
 
         @Override
-        public void remove() {       
+        public void remove() {
             if (!callNext) {
                 throw new IllegalStateException();
             }
 
             LinkedTaskList.this.remove(current.value);
-            
+
             callNext = false;
         }
     }

@@ -71,11 +71,7 @@ public class TaskIO {
                     title = dataInput.readUTF();
                     taskActive = dataInput.readInt();
 
-                    if (taskActive == 1) {
-                        isActive = true;
-                    } else {
-                        isActive = false;
-                    }
+                    isActive = taskActive == 1;
 
                     interval = dataInput.readInt();
 
@@ -117,137 +113,133 @@ public class TaskIO {
     }
 
     public static void write(TaskList tasks, Writer out) throws IOException {
-            PrintWriter writer = new PrintWriter(out);
+        PrintWriter writer = new PrintWriter(out);
 
-            try {
-                Task task;
-                String isActive;
-                String endLine;
-                String title;
-                String formatted;
-                int interval;
-                int intervalDay;
-                int intervalHour;
-                int intervalMin;
-                int intervalSec;
-                StringBuilder stringBuilder = new StringBuilder();
-                int i = 1;
-                int listSize = tasks.size();
+        try {
+            Task task;
+            String isActive;
+            String endLine;
+            String title;
+            String formatted;
+            int interval;
+            int intervalDay;
+            int intervalHour;
+            int intervalMin;
+            int intervalSec;
+            StringBuilder stringBuilder = new StringBuilder();
+            int i = 1;
+            int listSize = tasks.size();
 
-                writer.print(listSize);
-                writer.println();
+            writer.print(listSize);
+            writer.println();
 
-                Iterator iterator = tasks.iterator();
-                while (iterator.hasNext()) {
-                    task = (Task) iterator.next();
-                    title = task.getTitle().replace("\"", "\"\"");
+            Iterator iterator = tasks.iterator();
+            while (iterator.hasNext()) {
+                task = (Task) iterator.next();
+                title = task.getTitle().replace("\"", "\"\"");
 
-                    if (task.isActive()) {
-                        isActive = "";
-                    } else {
-                        isActive = " inactive";
-                    }
-
-                    if (i == listSize) {
-                        endLine = ".";
-                    } else {
-                        endLine = ";";
-                    }
-
-                    if (!task.isRepeated()) {
-                        formatted = String.format("\"%s\" " + "at [%tF %tT.%tL]%s%s",
-                                title,
-                                task.getTime(),
-                                task.getTime(),
-                                task.getTime(),
-                                isActive,
-                                endLine);
-                    } else {
-
-                        interval = task.getRepeatInterval();
-                        intervalDay = ((interval / 60) / 60) / 24;
-
-                        if (intervalDay == 0) {
-                            stringBuilder.append("");
-                        } else {
-                            if (intervalDay > 1) {
-                                stringBuilder.append(intervalDay).append(" days");
-
-                            } else {
-                                stringBuilder.append(intervalDay).append(" day");
-                            }
-                        }
-
-                        intervalHour = (interval / 60) / 60;
-                        if (intervalHour == 0 || intervalHour == 24) {
-                            stringBuilder.append("");
-                        } else {
-                            if (intervalDay != 0) {
-                                stringBuilder.append(" ");
-                            }
-                            if (intervalHour > 1) {
-                                stringBuilder.append(intervalHour).append(" hours");
-                            } else {
-                                stringBuilder.append(intervalHour).append(" hour");
-                            }
-                        }
-
-                        intervalMin = (interval / 60) - intervalHour * 60;
-                        if (intervalMin == 0 || intervalMin == 60) {
-                            stringBuilder.append("");
-                        } else {
-                            if (intervalHour != 0) {
-                                stringBuilder.append(" ");
-                            }
-                            if (intervalMin > 1) {
-                                stringBuilder.append(intervalMin).append(" minutes");
-
-                            } else {
-                                stringBuilder.append(intervalMin).append(" minute");
-                            }
-                        }
-
-                        intervalSec = interval - (intervalHour * 60 * 60
-                                + intervalMin * 60);
-                        if (intervalSec == 0 || intervalSec == 60) {
-                            stringBuilder.append("");
-                        } else {
-                            if (intervalMin != 0) {
-                                stringBuilder.append(" ");
-                            }
-                            if (intervalSec > 1) {
-                                stringBuilder.append(intervalSec).append(" seconds");
-
-                            } else {
-                                stringBuilder.append(intervalSec).append(" second");
-                            }
-                        }
-
-                        formatted = String.format("\"%s\" "
-                                        + "from [%tF %tT.%tL] "
-                                        + "to [%tF %tT.%tL] "
-                                        + "every [%s]%s%s",
-                                title,
-                                task.getStartTime(),
-                                task.getStartTime(),
-                                task.getStartTime(),
-                                task.getEndTime(),
-                                task.getEndTime(),
-                                task.getEndTime(),
-                                stringBuilder.toString(),
-                                isActive,
-                                endLine
-                        );
-
-                    }
-                    stringBuilder.delete(0, stringBuilder.length());
-                    writer.print(formatted);
-                    writer.println();
-                    i++;
+                if (task.isActive()) {
+                    isActive = "";
+                } else {
+                    isActive = " inactive";
                 }
-            } finally {
-                writer.close();
+
+                if (i == listSize) {
+                    endLine = ".";
+                } else {
+                    endLine = ";";
+                }
+
+                if (!task.isRepeated()) {
+                    formatted = String.format("\"%s\" " + "at [%tF %tT.%tL]%s%s",
+                            title,
+                            task.getTime(),
+                            task.getTime(),
+                            task.getTime(),
+                            isActive,
+                            endLine);
+                } else {
+
+                    interval = task.getRepeatInterval();
+                    intervalDay = ((interval / 60) / 60) / 24;
+
+                    if (intervalDay == 0) {
+                    } else {
+                        if (intervalDay > 1) {
+                            stringBuilder.append(intervalDay).append(" days");
+
+                        } else {
+                            stringBuilder.append(intervalDay).append(" day");
+                        }
+                    }
+
+                    intervalHour = (interval / 60) / 60;
+                    if (intervalHour == 0 || intervalHour == 24) {
+                    } else {
+                        if (intervalDay != 0) {
+                            stringBuilder.append(" ");
+                        }
+                        if (intervalHour > 1) {
+                            stringBuilder.append(intervalHour).append(" hours");
+                        } else {
+                            stringBuilder.append(intervalHour).append(" hour");
+                        }
+                    }
+
+                    intervalMin = (interval / 60) - intervalHour * 60;
+                    if (intervalMin == 0 || intervalMin == 60) {
+                    } else {
+                        if (intervalHour != 0) {
+                            stringBuilder.append(" ");
+                        }
+                        if (intervalMin > 1) {
+                            stringBuilder.append(intervalMin).append(" minutes");
+
+                        } else {
+                            stringBuilder.append(intervalMin).append(" minute");
+                        }
+                    }
+
+                    intervalSec = interval - (intervalHour * 60 * 60
+                            + intervalMin * 60);
+                    if (intervalSec == 0 || intervalSec == 60) {
+                    } else {
+                        if (intervalMin != 0) {
+                            stringBuilder.append(" ");
+                        }
+                        if (intervalSec > 1) {
+                            stringBuilder.append(intervalSec).append(" seconds");
+
+                        } else {
+                            stringBuilder.append(intervalSec).append(" second");
+                        }
+                    }
+
+                    formatted = String.format("\"%s\" "
+                                    + "from [%tF %tT.%tL] "
+                                    + "to [%tF %tT.%tL] "
+                                    + "every [%s]%s%s",
+                            title,
+                            task.getStartTime(),
+                            task.getStartTime(),
+                            task.getStartTime(),
+                            task.getEndTime(),
+                            task.getEndTime(),
+                            task.getEndTime(),
+                            stringBuilder.toString(),
+                            isActive,
+                            endLine
+                    );
+
+                }
+                stringBuilder.delete(0, stringBuilder.length());
+                writer.print(formatted);
+                writer.println();
+                i++;
             }
+        } finally {
+            writer.close();
+        }
     }
 
     public static void read(TaskList tasks, Reader in) throws IOException, ParseException {
@@ -273,17 +265,9 @@ public class TaskIO {
                     title = input.substring(input.indexOf("\"") + 1,
                             input.lastIndexOf("\"")).replace("\"\"", "\"");
 
-                    if (input.contains("] inactive")) {
-                        isActive = false;
-                    } else {
-                        isActive = true;
-                    }
+                    isActive = !input.contains("] inactive");
 
-                    if (input.contains("from [") & input.contains("to [")) {
-                        isRepeated = true;
-                    } else {
-                        isRepeated = false;
-                    }
+                    isRepeated = input.contains("from [") & input.contains("to [");
 
                     if (!isRepeated) {
                         String timeInString = input.substring(input.indexOf("[") + 1,

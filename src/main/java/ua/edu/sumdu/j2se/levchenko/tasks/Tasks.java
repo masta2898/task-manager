@@ -20,7 +20,7 @@ public class Tasks {
         Iterable<Task> inc = incoming(tasks, start, end);
         for (Task task : inc) {
             Date tmp = task.nextTimeAfter(start);
-            while(tmp != null && tmp.compareTo(end) <= 0) {
+            while (tmp != null && tmp.compareTo(end) <= 0) {
                 if (calendar.containsKey(tmp)) {
                     calendar.get(tmp).add(task);
                 } else {

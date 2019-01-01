@@ -2,8 +2,6 @@ package ua.edu.sumdu.j2se.levchenko.tasks;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class ArrayTaskList extends TaskList implements Cloneable {
     private Task[] arrayTask = new Task[3];
@@ -61,7 +59,7 @@ public class ArrayTaskList extends TaskList implements Cloneable {
 
         return arrayTask[index];
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -70,9 +68,9 @@ public class ArrayTaskList extends TaskList implements Cloneable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-            
+
         ArrayTaskList other = (ArrayTaskList) obj;
-        
+
         for (int i = 0; i < count; i++) {
             if (!arrayTask[i].equals(other.arrayTask[i])) {
                 return false;
@@ -80,28 +78,28 @@ public class ArrayTaskList extends TaskList implements Cloneable {
         }
         return true;
     }
-    
+
     @Override
     public int hashCode() {
         int result = 1;
-        
+
         for (int i = 0; i < count; i++) {
             result = 31 * result + arrayTask[i].hashCode();
         }
-        
+
         return result;
     }
-    
+
     @Override
     public ArrayTaskList clone() {
         Task[] copiedElems = new Task[count];
-        ArrayTaskList copiedOne = new ArrayTaskList();  
-        
+        ArrayTaskList copiedOne = new ArrayTaskList();
+
         for (int i = 0; i < count; i++) {
             copiedElems[i] = arrayTask[i];
             copiedOne.add(copiedElems[i]);
         }
-       
+
         return copiedOne;
     }
 
@@ -111,14 +109,14 @@ public class ArrayTaskList extends TaskList implements Cloneable {
                 "arrayTask = " + java.util.Arrays.toString(arrayTask) +
                 '}';
     }
-    
+
     @Override
     public Iterator<Task> iterator() {
         return new Itr<>();
     }
 
     private class Itr<Task> implements Iterator<Task> {
-        int cursor;     
+        int cursor;
         int lastRet = -1;
 
         Itr() {
