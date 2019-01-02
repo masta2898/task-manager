@@ -21,8 +21,8 @@
         <maven.compiler.target>1.11</maven.compiler.target>
     </properties>
 
-    <groupId>ua.edu.sumdu.j2se.levchenko.tasks</groupId>
-    <artifactId>tasks</artifactId>
+    <groupId>ua.edu.sumdu.j2se.levchenko</groupId>
+    <artifactId>task-manager</artifactId>
     <version>1.0</version>
     <dependencies>
         <dependency>
@@ -38,6 +38,37 @@
             <version>1.0</version>
             <systemPath>/home/john/Documents/levchenko/java.course.dev/lib/tester.jar</systemPath>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>11</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-graphics -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>11</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>11</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-base -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+            <version>11</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-web -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>11</version>
+        </dependency>
+
     </dependencies>
 
 
