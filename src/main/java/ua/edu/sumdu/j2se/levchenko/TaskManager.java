@@ -16,7 +16,7 @@ public class TaskManager extends Application {
         Parent content = loader.load();
 
         stage.setTitle("Task Manager");
-        stage.setScene(new Scene(content, 500, 400));
+        stage.setScene(new Scene(content));
         stage.show();
     }
 
