@@ -6,12 +6,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ua.edu.sumdu.j2se.levchenko.controller.MainWindowController;
+import ua.edu.sumdu.j2se.levchenko.tasks.TaskRepository;
 
 public class TaskManager extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        loader.setController(new MainWindowController());
+        loader.setController(new MainWindowController(new TaskRepository()));
         loader.setLocation(getClass().getResource("/main.fxml"));
         Parent content = loader.load();
 
