@@ -1,11 +1,12 @@
 package ua.edu.sumdu.j2se.levchenko.tasks;
 
+import java.io.File;
 import java.util.Date;
 
 public class TaskRepository implements Repository {
     private TaskList tasks;
 
-    TaskRepository() {
+    public TaskRepository() {
         this(new LinkedTaskList());
     }
 
@@ -15,7 +16,7 @@ public class TaskRepository implements Repository {
 
     @Override
     public void add(Task task) {
-
+        tasks.add(task);
     }
 
     @Override
@@ -24,7 +25,7 @@ public class TaskRepository implements Repository {
     }
 
     @Override
-    public void erase() {
+    public void clear() {
 
     }
 
@@ -40,11 +41,21 @@ public class TaskRepository implements Repository {
 
     @Override
     public TaskList getAll() {
-        return null;
+        return tasks;
     }
 
     @Override
     public TaskList getTasksByTime(Date time) {
         return null;
+    }
+
+    @Override
+    public void loadFromFile(File file) {
+
+    }
+
+    @Override
+    public void saveToFile(File file) {
+
     }
 }
