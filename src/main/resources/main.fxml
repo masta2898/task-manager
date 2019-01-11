@@ -20,27 +20,27 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Open" />
-                  <MenuItem mnemonicParsing="false" text="Save" />
-                  <MenuItem mnemonicParsing="false" text="Save as..." />
-                  <MenuItem mnemonicParsing="false" text="Close" />
+                <MenuItem mnemonicParsing="false" text="Open" onAction="#openTasksFile" />
+                <MenuItem mnemonicParsing="false" text="Save" onAction="#saveTasks" />
+                <MenuItem mnemonicParsing="false" text="Save as..." onAction="#saveTasksAs" />
+                <MenuItem mnemonicParsing="false" text="Close" onAction="#close"/>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem mnemonicParsing="false" text="New task" />
-                  <MenuItem mnemonicParsing="false" text="Edit task" />
-                  <MenuItem mnemonicParsing="false" text="Delete task" />
+                <MenuItem mnemonicParsing="false" text="New task" onAction="#newTask" />
+                <MenuItem mnemonicParsing="false" text="Edit task" onAction="#editTask" />
+                <MenuItem mnemonicParsing="false" text="Delete task" onAction="#deleteTask" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="View">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Show details..." />
+                  <MenuItem mnemonicParsing="false" text="Show details..." onAction="#showTaskDetails" />
                </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" text="About" onAction="showAbout" />
             </items>
           </Menu>
         </menus>
@@ -73,11 +73,11 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="113.0" text="Open" onAction="#onOpenFile" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" text="Save" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="116.0" text="New task" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="108.0" text="Edit task" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="109.0" text="Delete task" />
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="113.0" text="Open" onAction="#openTasksFile" />
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" text="Save" onAction="#saveTasks" />
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="116.0" text="New task" onAction="#newTask" />
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="108.0" text="Edit task" onAction="#editTask" />
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="109.0" text="Delete task" onAction="#deleteTask" />
             <DatePicker promptText="From" />
             <DatePicker promptText="To" />
             <ImageView fitHeight="150.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true">
