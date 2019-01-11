@@ -51,15 +51,15 @@
          <children>
             <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <content>
-                  <TableView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="353.0" prefWidth="497.0">
+                  <TableView fx:id="taskTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="353.0" prefWidth="497.0">
                     <columns>
-                      <TableColumn prefWidth="61.0" text="Active" />
-                      <TableColumn prefWidth="265.0" text="Title" />
-                        <TableColumn prefWidth="88.0" text="Repeated" />
-                        <TableColumn prefWidth="83.0" text="Time" />
-                        <TableColumn prefWidth="68.0" text="Start" />
-                        <TableColumn prefWidth="73.0" text="End" />
-                        <TableColumn prefWidth="86.0" text="Interval" />
+                        <TableColumn fx:id="active" prefWidth="61.0" text="Active" />
+                        <TableColumn fx:id="title" prefWidth="265.0" text="Title" />
+                        <TableColumn fx:id="repeated" prefWidth="88.0" text="Repeated" />
+                        <TableColumn fx:id="time" prefWidth="83.0" text="Time" />
+                        <TableColumn fx:id="start" prefWidth="68.0" text="Start" />
+                        <TableColumn fx:id="end" prefWidth="73.0" text="End" />
+                        <TableColumn fx:id="interval" prefWidth="86.0" text="Interval" />
                     </columns>
                   </TableView>
                </content>
@@ -68,12 +68,12 @@
       </VBox>
    </center>
    <bottom>
-      <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="16.0" prefWidth="593.0" text="Status" BorderPane.alignment="CENTER_LEFT" />
+      <Label fx:id="status" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="16.0" prefWidth="593.0" text="Status" BorderPane.alignment="CENTER_LEFT" />
    </bottom>
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="113.0" text="Open" VBox.vgrow="ALWAYS" />
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="113.0" text="Open" onAction="#onOpenFile" />
             <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" text="Save" />
             <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="116.0" text="New task" />
             <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="108.0" text="Edit task" />
@@ -82,7 +82,7 @@
             <DatePicker promptText="To" />
             <ImageView fitHeight="150.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@6ecb2b99259839b030754728e3c0aa29.png" />
+                  <Image url="@cat.png" />
                </image>
             </ImageView>
          </children>
