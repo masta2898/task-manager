@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ua.edu.sumdu.j2se.levchenko.controller.MainWindowController;
-import ua.edu.sumdu.j2se.levchenko.tasks.TaskRepository;
+import ua.edu.sumdu.j2se.levchenko.tasks.repository.TaskRepository;
 
 public class TaskManager extends Application {
     @Override

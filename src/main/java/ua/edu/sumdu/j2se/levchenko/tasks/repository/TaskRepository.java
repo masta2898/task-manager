@@ -93,6 +93,11 @@ public class TaskRepository implements Repository {
             RepositoryException exception = new RepositoryException("Error parsing file.");
             exception.addSuppressed(e);
             throw exception;
+        } catch (Exception e) {
+            log.error(String.format("Error happened trying to work with file %s", file.getAbsolutePath()), e);
+            RepositoryException exception = new RepositoryException("Error working with file.");
+            exception.addSuppressed(e);
+            throw exception;
         }
     }
 
@@ -100,7 +105,7 @@ public class TaskRepository implements Repository {
     public void saveToFile(File file) throws RepositoryException {
         try {
             TaskIO.writeText(this.tasks, file);
-            log.info(String.format("Wrote %d tasks to %s.", this.tasks.size(), file.getAbsolutePath()));
+            log.info(String.format("Saved %d task(s) to %s", this.tasks.size(), file.getAbsolutePath()));
         } catch (IOException e) {
             log.error(String.format("Error happened trying to write to file %s", file.getAbsolutePath()), e);
             RepositoryException exception = new RepositoryException("Error writing to file.");
