@@ -254,7 +254,7 @@ public class TaskIO {
         } catch (FileNotFoundException e) {
             System.out.println("Невозможно произвести запись в файл.");
         } catch (IOException e) {
-            System.out.println("Ошибка ввода/вівода =: " + e);
+            System.out.println("Ошибка ввода/вывода =: " + e);
         }
     }
 
@@ -345,7 +345,7 @@ public class TaskIO {
         } catch (FileNotFoundException e) {
             System.out.println("Невозможно произвести запись в файл.");
         } catch (IOException e) {
-            System.out.println("Ошибка ввода/вівода =: " + e);
+            System.out.println("Ошибка ввода/вывода =: " + e);
         }
     }
 
