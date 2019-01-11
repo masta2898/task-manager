@@ -2,14 +2,14 @@ package ua.edu.sumdu.j2se.levchenko.tasks;
 
 import java.util.Date;
 
-public class TasksRepository implements Repository {
+public class TaskRepository implements Repository {
     private TaskList tasks;
 
-    TasksRepository() {
+    TaskRepository() {
         this(new LinkedTaskList());
     }
 
-    TasksRepository(TaskList tasks) {
+    TaskRepository(TaskList tasks) {
         load(tasks);
     }
 

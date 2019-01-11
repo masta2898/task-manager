@@ -5,13 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import ua.edu.sumdu.j2se.levchenko.controller.MainController;
+import ua.edu.sumdu.j2se.levchenko.controller.MainWindowController;
 
 public class TaskManager extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        loader.setController(new MainController());
+        loader.setController(new MainWindowController());
         loader.setLocation(getClass().getResource("/main.fxml"));
         Parent content = loader.load();
 
