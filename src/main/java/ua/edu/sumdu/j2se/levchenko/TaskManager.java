@@ -11,8 +11,10 @@ import ua.edu.sumdu.j2se.levchenko.tasks.TaskRepository;
 public class TaskManager extends Application {
     @Override
     public void start(Stage stage) throws Exception {
+        MainWindowController controller = new MainWindowController(stage, new TaskRepository());
+
         FXMLLoader loader = new FXMLLoader();
-        loader.setController(new MainWindowController(new TaskRepository()));
+        loader.setController(controller);
         loader.setLocation(getClass().getResource("/main.fxml"));
         Parent content = loader.load();
 
