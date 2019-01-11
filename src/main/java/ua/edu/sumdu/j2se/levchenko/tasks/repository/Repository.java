@@ -1,4 +1,7 @@
-package ua.edu.sumdu.j2se.levchenko.tasks;
+package ua.edu.sumdu.j2se.levchenko.tasks.repository;
+
+import ua.edu.sumdu.j2se.levchenko.tasks.Task;
+import ua.edu.sumdu.j2se.levchenko.tasks.TaskList;
 
 import java.io.File;
 import java.util.Date;
@@ -14,6 +17,6 @@ public interface Repository {
     TaskList getAll();
     TaskList getTasksByTime(Date time);
 
-    void loadFromFile(File file);
-    void saveToFile(File file);
+    void loadFromFile(File file) throws RepositoryException;
+    void saveToFile(File file) throws RepositoryException;
 }
