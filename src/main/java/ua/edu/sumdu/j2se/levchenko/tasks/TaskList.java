@@ -1,6 +1,6 @@
 package ua.edu.sumdu.j2se.levchenko.tasks;
 
-abstract class TaskList implements Iterable<Task> {
+public abstract class TaskList implements Iterable<Task> {
     protected int count = 0;
 
     public abstract void add(Task task);
