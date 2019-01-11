@@ -82,7 +82,7 @@ public class TaskRepository implements Repository {
     public void loadFromFile(File file) throws RepositoryException {
         try {
             TaskIO.readText(this.tasks, file);
-            log.info(String.format("Loaded %d tasks from %s.", this.tasks.size(), file.getAbsolutePath()));
+            log.info(String.format("Loaded %d tasks from %s", this.tasks.size(), file.getAbsolutePath()));
         } catch (IOException e) {
             log.error(String.format("Error happened trying to read file %s", file.getAbsolutePath()), e);
             RepositoryException exception = new RepositoryException("Error reading file.");
