@@ -119,7 +119,7 @@ public class MainWindowController implements Initializable {
         Task t = new Task("Test", new Date());
         t.setActive(true);
         taskRepository.add(t);
-        TaskView tv = new TaskView(t.getTitle(), t.getTime(), t.isActive());
+        TaskView tv = taskModelToView(t);
         taskTableObservableList.add(tv);
     }
 
@@ -130,6 +130,15 @@ public class MainWindowController implements Initializable {
 
     @FXML
     void deleteTask(ActionEvent event) {
+        TaskView selectedTask = getSelectedTask();
+        if (selectedTask == null) {
+            showWarningMessage("No selected task.", "Select task to perform this operation!");
+            return;
+        }
+
+        Task task = taskViewToModel(selectedTask);
+        taskRepository.remove(task);
+        taskTableObservableList.removeAll(selectedTask);
         saved = false;
     }
 
@@ -143,6 +152,36 @@ public class MainWindowController implements Initializable {
 
     }
 
+    private Task taskViewToModel(TaskView taskView) {
+        Task task;
+        if (taskView.getRepeated().equals("Yes")) {
+            Date startTime = taskView.getStart();
+            Date endTime = taskView.getEnd();
+            task = new Task(taskView.getTitle(), startTime, endTime, taskView.getInterval());
+        } else {
+            Date time = taskView.getTime();
+            task = new Task(taskView.getTitle(), time);
+        }
+        task.setActive(taskView.getActive().equals("Yes"));
+        return task;
+    }
+
+    private TaskView taskModelToView(Task task) {
+        TaskView view;
+        if (task.isRepeated()) {
+            view = new TaskView(task.getTitle(), task.getStartTime(), task.getEndTime(),
+                    task.getRepeatInterval(), task.isActive() ? "Yes" : "No");
+        } else {
+            view = new TaskView(task.getTitle(), task.getTime(), task.isActive() ? "Yes" : "No");
+        }
+        return view;
+    }
+
+    private TaskView getSelectedTask() {
+        TableView.TableViewSelectionModel<TaskView> tableSelectionModel = taskTable.getSelectionModel();
+        return tableSelectionModel != null ? tableSelectionModel.getSelectedItem() : null;
+    }
+
     private boolean isSaved() {
         if (saved) return true;
         String filename = tasksFile != null ? tasksFile.getName() : "new file";
@@ -152,14 +191,7 @@ public class MainWindowController implements Initializable {
     private void loadTasksToTable(TaskList tasks) {
         taskTableObservableList.clear();
         for (Task task: tasks)  {
-            TaskView taskView;
-            if (task.isRepeated()) {
-                taskView = new TaskView(task.getTitle(), task.getStartTime(), task.getEndTime(),
-                        task.getRepeatInterval(), task.isActive());
-            } else {
-                taskView = new TaskView(task.getTitle(), task.getTime(), task.isActive());
-            }
-            taskTableObservableList.add(taskView);
+            taskTableObservableList.add(taskModelToView(task));
         }
     }
 
@@ -217,6 +249,14 @@ public class MainWindowController implements Initializable {
 
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
+    }
+
+    private void showWarningMessage(String message, String details) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setHeaderText(message);
+        alert.setContentText(details);
+        alert.showAndWait();
     }
 
     private void showErrorMessage(String message, String details) {
