@@ -1,7 +1,7 @@
 package ua.edu.sumdu.j2se.levchenko;
 
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.util.Date;
@@ -9,64 +9,64 @@ import java.util.Date;
 public class TaskView {
     private SimpleStringProperty title;
 
-    private SimpleStringProperty start = new SimpleStringProperty();
-    private SimpleStringProperty time = new SimpleStringProperty();
-    private SimpleStringProperty end = new SimpleStringProperty();
+    private SimpleObjectProperty<Date> start;
+    private SimpleObjectProperty<Date> time;
+    private SimpleObjectProperty<Date> end;
 
     private SimpleIntegerProperty interval;
 
     private SimpleStringProperty active;
     private SimpleStringProperty repeated;
 
-    public TaskView(String title, Date time, boolean active) {
+    public TaskView(String title, Date time, String active) {
         this.title = new SimpleStringProperty(title);
-        this.time = new SimpleStringProperty(time != null ? time.toString() : "");
-        this.active = new SimpleStringProperty(active ? "Yes" : "No");
+        this.time = new SimpleObjectProperty<>(time);
+        this.active = new SimpleStringProperty(active);
         this.repeated = new SimpleStringProperty("No");
     }
 
-    public TaskView(String title, Date start, Date end, int interval, boolean active) {
+    public TaskView(String title, Date start, Date end, int interval, String active) {
         this.title = new SimpleStringProperty(title);
-        this.start = new SimpleStringProperty(start != null ? start.toString() : "");
-        this.end = new SimpleStringProperty(start != null ? end.toString() : "");
+        this.start = new SimpleObjectProperty<>(start);
+        this.end = new SimpleObjectProperty<>(end);
         this.interval = new SimpleIntegerProperty(interval);
-        this.active = new SimpleStringProperty(active ? "Yes" : "No");
+        this.active = new SimpleStringProperty(active);
         this.repeated = new SimpleStringProperty("Yes");
     }
 
-    public String getStart() {
+    public Date getStart() {
         return start.get();
     }
 
-    public SimpleStringProperty startProperty() {
+    public SimpleObjectProperty<Date> startProperty() {
         return start;
     }
 
-    public void setStart(String start) {
+    public void setStart(Date start) {
         this.start.set(start);
     }
 
-    public String getTime() {
+    public Date getTime() {
         return time.get();
     }
 
-    public SimpleStringProperty timeProperty() {
+    public SimpleObjectProperty<Date> timeProperty() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Date time) {
         this.time.set(time);
     }
 
-    public String getEnd() {
+    public Date getEnd() {
         return end.get();
     }
 
-    public SimpleStringProperty endProperty() {
+    public SimpleObjectProperty<Date> endProperty() {
         return end;
     }
 
-    public void setEnd(String end) {
+    public void setEnd(Date end) {
         this.end.set(end);
     }
 
