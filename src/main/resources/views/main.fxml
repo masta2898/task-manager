@@ -82,7 +82,7 @@
             <DatePicker promptText="To" />
             <ImageView fitHeight="150.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@cat.png" />
+                  <Image url="@../cat.png" />
                </image>
             </ImageView>
          </children>
