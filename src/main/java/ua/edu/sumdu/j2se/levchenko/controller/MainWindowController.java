@@ -152,17 +152,14 @@ public class MainWindowController implements Initializable {
 
     }
 
-    private Task taskViewToModel(TaskView taskView) {
+    private Task taskViewToModel(TaskView view) {
         Task task;
-        if (taskView.getRepeated().equals("Yes")) {
-            Date startTime = taskView.getStart();
-            Date endTime = taskView.getEnd();
-            task = new Task(taskView.getTitle(), startTime, endTime, taskView.getInterval());
+        if (view.getRepeated().equals("Yes")) {
+            task = new Task(view.getTitle(), view.getStart(), view.getEnd(), view.getInterval());
         } else {
-            Date time = taskView.getTime();
-            task = new Task(taskView.getTitle(), time);
+            task = new Task(view.getTitle(), view.getTime());
         }
-        task.setActive(taskView.getActive().equals("Yes"));
+        task.setActive(view.getActive().equals("Yes"));
         return task;
     }
 
