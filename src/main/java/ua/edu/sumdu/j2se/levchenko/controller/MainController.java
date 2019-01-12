@@ -17,10 +17,8 @@ import ua.edu.sumdu.j2se.levchenko.tasks.repository.RepositoryException;
 
 import java.io.File;
 import java.net.URL;
-import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 
 public class MainController implements Initializable, Controller {
     @FXML
@@ -50,14 +48,29 @@ public class MainController implements Initializable, Controller {
     private final Repository taskRepository;
     private ObservableList<TaskView> taskTableObservableList = FXCollections.observableArrayList();
 
-    private Controller taskOperationController;
+    private TaskOperationController newTaskController;
+    private TaskOperationController editTaskController;
+    private TaskOperationController taskDetailsController;
+
     private Controller aboutController;
 
-    public MainController(Stage mainWindow, Controller taskOperationController, Controller aboutController,
-                          Repository taskRepository) {
+    public MainController(Repository taskRepository) {
         this.taskRepository = taskRepository;
-        this.mainWindow = mainWindow;
-        this.taskOperationController = taskOperationController;
+    }
+
+    public void setNewTaskController(TaskOperationController newTaskController) {
+        this.newTaskController = newTaskController;
+    }
+
+    public void setEditTaskController(TaskOperationController editTaskController) {
+        this.editTaskController = editTaskController;
+    }
+
+    public void setTaskDetailsController(TaskOperationController taskDetailsController) {
+        this.taskDetailsController = taskDetailsController;
+    }
+
+    public void setAboutController(Controller aboutController) {
         this.aboutController = aboutController;
     }
 
@@ -75,12 +88,12 @@ public class MainController implements Initializable, Controller {
     }
 
     @Override
-    public void setTaskTableObservableList(ObservableList<TaskView> taskTableObservableList) {
-        this.taskTableObservableList = taskTableObservableList;
+    public void setWindow(Stage window) {
+        this.mainWindow = window;
     }
 
     @Override
-    public void show() {
+    public void showWindow() {
         mainWindow.show();
     }
 
@@ -132,48 +145,71 @@ public class MainController implements Initializable, Controller {
 
     @FXML
     void newTask(ActionEvent event) {
-        fileChanged = true;
-        Task t = new Task("Test", new Date());
-        t.setActive(true);
-        taskRepository.add(t);
-        TaskView tv = taskModelToView(t);
-        taskTableObservableList.add(tv);
+        if (newTaskController != null) {
+            newTaskController.showWindow();
+            Task task = newTaskController.getTask();
+            if (task != null) {
+                taskRepository.add(task);
+                taskTableObservableList.add(taskModelToView(task));
+                fileChanged = true;
+                status.setText(String.format("Created '%s' task.", task.getTitle()));
+            }
+        }
     }
 
     @FXML
     void editTask(ActionEvent event) {
-        Task task = getSelectedTask(getSelectedTaskView());
-        if (task == null) {
+        TaskView selectedTaskView = getSelectedTaskView();
+        Task selectedTask = getSelectedTask(selectedTaskView);
+        if (selectedTask == null) {
             return;
         }
 
+        Task oldTask = selectedTask.clone();
+        editTaskController.setTask(selectedTask);
+        editTaskController.showWindow();
+        Task task = editTaskController.getTask();
+        if (task.equals(oldTask)) {
+            return;
+        }
+
+        taskRepository.remove(oldTask);
+        taskRepository.add(task);
+
+        taskTableObservableList.remove(selectedTaskView);
+        taskTableObservableList.add(taskModelToView(task));
+
         fileChanged = true;
+
+        status.setText(String.format("Edited '%s' task.", task.getTitle()));
     }
 
     @FXML
     void deleteTask(ActionEvent event) {
         TaskView selectedTaskView = getSelectedTaskView();
-        Task task = getSelectedTask(selectedTaskView);
-        if (task == null) {
-            return;
+        Task selectedTask = getSelectedTask(selectedTaskView);
+        if (selectedTask != null) {
+            taskRepository.remove(selectedTask);
+            taskTableObservableList.remove(selectedTaskView);
+            fileChanged = true;
+            status.setText(String.format("Deleted '%s' task.", selectedTask.getTitle()));
         }
-
-        taskRepository.remove(task);
-        taskTableObservableList.removeAll(selectedTaskView);
-        fileChanged = true;
     }
 
     @FXML
     void showTaskDetails(ActionEvent event) {
-        Task task = getSelectedTask(getSelectedTaskView());
-        if (task == null) {
-            return;
+        Task selectedTask = getSelectedTask(getSelectedTaskView());
+        if (selectedTask != null) {
+            if (taskDetailsController != null) {
+                taskDetailsController.setTask(selectedTask);
+                taskDetailsController.showWindow();
+            }
         }
     }
 
     @FXML
     void showAbout(ActionEvent event) {
-        aboutController.show();
+        aboutController.showWindow();
     }
 
     private Task taskViewToModel(TaskView view) {
