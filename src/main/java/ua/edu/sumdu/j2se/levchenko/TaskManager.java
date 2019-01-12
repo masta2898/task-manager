@@ -22,20 +22,20 @@ public class TaskManager extends Application {
     public void start(Stage mainWindow) throws Exception {
         MainController mainController = new MainController(new TaskRepository());
 
-        mainController.setAboutController(getController("/about.fxml", "About", new AboutController()));
-        mainController.setNewTaskController(getController("/task.fxml", "New Task", new NewTaskController()));
-        mainController.setEditTaskController(getController("/task.fxml", "Edit Task", new EditTaskController()));
-        mainController.setTaskDetailsController(getController("/task.fxml", "Task Details", new TaskDetailsController()));
+        mainController.setAboutController(getController("/views/about.fxml", "About", new AboutController()));
+        mainController.setNewTaskController(getController("/views/task.fxml", "New Task", new NewTaskController()));
+        mainController.setEditTaskController(getController("/views/task.fxml", "Edit Task", new EditTaskController()));
+        mainController.setTaskDetailsController(getController("/views/details.fxml", "Details", new TaskDetailsController()));
 
         FXMLLoader loader = new FXMLLoader();
         loader.setController(mainController);
-        loader.setLocation(getClass().getResource("/main.fxml"));
+        loader.setLocation(getClass().getResource("/views/main.fxml"));
         Parent content = loader.load();
 
         mainWindow.setTitle("Task Manager");
         mainWindow.setResizable(true);
         mainWindow.setScene(new Scene(content));
-        mainWindow.getIcons().add(new Image(getClass().getResourceAsStream("/cat.png")));
+        mainWindow.getIcons().add(new Image(getClass().getResourceAsStream("/icons/cat.png")));
 
         mainController.setWindow(mainWindow);
         mainController.showWindow();
