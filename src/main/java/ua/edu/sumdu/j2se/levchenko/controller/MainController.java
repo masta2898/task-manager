@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 
-public class MainWindowController implements Initializable {
+public class MainWindowController implements Initializable, Controller {
     @FXML
     private TableView<TaskView> taskTable;
 
@@ -50,9 +50,15 @@ public class MainWindowController implements Initializable {
     private final Repository taskRepository;
     private ObservableList<TaskView> taskTableObservableList = FXCollections.observableArrayList();
 
-    public MainWindowController(Stage mainWindow, Repository taskRepository) {
+    private Controller taskOperationController;
+    private Controller aboutController;
+
+    public MainWindowController(Stage mainWindow, Controller taskOperationController, Controller aboutController,
+                                Repository taskRepository) {
         this.taskRepository = taskRepository;
         this.mainWindow = mainWindow;
+        this.taskOperationController = taskOperationController;
+        this.aboutController = aboutController;
     }
 
     @Override
@@ -66,6 +72,11 @@ public class MainWindowController implements Initializable {
         end.setCellValueFactory(new PropertyValueFactory<>("end"));
         interval.setCellValueFactory(new PropertyValueFactory<>("interval"));
         taskTable.setItems(taskTableObservableList);
+    }
+
+    @Override
+    public void setTaskTableObservableList(ObservableList<TaskView> taskTableObservableList) {
+        this.taskTableObservableList = taskTableObservableList;
     }
 
     @FXML
@@ -126,35 +137,31 @@ public class MainWindowController implements Initializable {
 
     @FXML
     void editTask(ActionEvent event) {
-        TaskView selectedTask = getSelectedTask();
-        if (selectedTask == null) {
-            showWarningMessage("No selected task.", "Select task to perform this operation!");
+        Task task = getSelectedTask(getSelectedTaskView());
+        if (task == null) {
             return;
         }
-
 
         fileChanged = true;
     }
 
     @FXML
     void deleteTask(ActionEvent event) {
-        TaskView selectedTask = getSelectedTask();
-        if (selectedTask == null) {
-            showWarningMessage("No selected task.", "Select task to perform this operation!");
+        TaskView selectedTaskView = getSelectedTaskView();
+        Task task = getSelectedTask(selectedTaskView);
+        if (task == null) {
             return;
         }
 
-        Task task = taskViewToModel(selectedTask);
         taskRepository.remove(task);
-        taskTableObservableList.removeAll(selectedTask);
+        taskTableObservableList.removeAll(selectedTaskView);
         fileChanged = true;
     }
 
     @FXML
     void showTaskDetails(ActionEvent event) {
-        TaskView selectedTask = getSelectedTask();
-        if (selectedTask == null) {
-            showWarningMessage("No selected task.", "Select task to perform this operation!");
+        Task task = getSelectedTask(getSelectedTaskView());
+        if (task == null) {
             return;
         }
     }
@@ -186,9 +193,17 @@ public class MainWindowController implements Initializable {
         return view;
     }
 
-    private TaskView getSelectedTask() {
+    private TaskView getSelectedTaskView() {
         TableView.TableViewSelectionModel<TaskView> tableSelectionModel = taskTable.getSelectionModel();
         return tableSelectionModel != null ? tableSelectionModel.getSelectedItem() : null;
+    }
+
+    private Task getSelectedTask(TaskView selectedTaskView) {
+        if (selectedTaskView == null) {
+            showWarningMessage("No selected task.", "Select task to perform this operation!");
+            return null;
+        }
+        return taskViewToModel(selectedTaskView);
     }
 
     private boolean fileHasChanged() {
