@@ -4,13 +4,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import ua.edu.sumdu.j2se.levchenko.controller.AboutController;
-import ua.edu.sumdu.j2se.levchenko.controller.Controller;
-import ua.edu.sumdu.j2se.levchenko.controller.MainController;
-import ua.edu.sumdu.j2se.levchenko.controller.TaskOperationController;
+import ua.edu.sumdu.j2se.levchenko.controller.*;
 import ua.edu.sumdu.j2se.levchenko.tasks.repository.TaskRepository;
 
 import java.io.IOException;
@@ -22,8 +20,12 @@ public class TaskManager extends Application {
 
     @Override
     public void start(Stage mainWindow) throws Exception {
-        Controller mainController = new MainController(mainWindow, getTaskOperationController(), getAboutController(),
-                new TaskRepository());
+        MainController mainController = new MainController(new TaskRepository());
+
+        mainController.setAboutController(getController("/about.fxml", "About", new AboutController()));
+        mainController.setNewTaskController(getController("/task.fxml", "New Task", new NewTaskController()));
+        mainController.setEditTaskController(getController("/task.fxml", "Edit Task", new EditTaskController()));
+        mainController.setTaskDetailsController(getController("/task.fxml", "Task Details", new TaskDetailsController()));
 
         FXMLLoader loader = new FXMLLoader();
         loader.setController(mainController);
@@ -33,34 +35,23 @@ public class TaskManager extends Application {
         mainWindow.setTitle("Task Manager");
         mainWindow.setResizable(true);
         mainWindow.setScene(new Scene(content));
+        mainWindow.getIcons().add(new Image(getClass().getResourceAsStream("/cat.png")));
 
-        mainController.show();
+        mainController.setWindow(mainWindow);
+        mainController.showWindow();
     }
 
-    // todo: refactor code duplicates
-    private Controller getAboutController() throws IOException {
-        Stage aboutWindow = new Stage();
-        Controller aboutController = new AboutController(aboutWindow);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/about.fxml"));
-        loader.setController(aboutController);
+    private <C extends Controller> C getController(String filename, String title, C controller) throws IOException {
+        Stage window = new Stage();
+        controller.setWindow(window);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
+        loader.setController(controller);
         Parent parent = loader.load();
 
-        aboutWindow.initModality(Modality.APPLICATION_MODAL);
-        aboutWindow.setTitle("About");
-        aboutWindow.setScene(new Scene(parent));
-        return aboutController;
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle(title);
+        window.setScene(new Scene(parent));
+        return controller;
     }
 
-    private Controller getTaskOperationController() throws IOException {
-        Stage taskOperationWindow = new Stage();
-        Controller taskOperationController = new TaskOperationController(taskOperationWindow);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/task.fxml"));
-        loader.setController(taskOperationController);
-        Parent parent = loader.load();
-
-        taskOperationWindow.initModality(Modality.APPLICATION_MODAL);
-        taskOperationWindow.setTitle("Task Operation");
-        taskOperationWindow.setScene(new Scene(parent));
-        return taskOperationController;
-    }
 }
