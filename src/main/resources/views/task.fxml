@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import java.lang.Integer?>
 <DialogPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="279.0" prefWidth="431.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <VBox prefHeight="301.0" prefWidth="462.0" spacing="10.0">
@@ -23,13 +24,13 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="300.0" />
+                  <TextField fx:id="title" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="300.0" />
                </children>
             </HBox>
             <HBox prefHeight="22.0" prefWidth="440.0">
                <children>
-                  <CheckBox mnemonicParsing="false" text="Repeated" />
-                  <CheckBox mnemonicParsing="false" prefHeight="18.0" prefWidth="85.0" text="Active">
+                  <CheckBox fx:id="repeated" onAction="#setRepeated" mnemonicParsing="false" text="Repeated" />
+                  <CheckBox fx:id="active" mnemonicParsing="false" prefHeight="18.0" prefWidth="85.0" text="Active">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
@@ -42,7 +43,7 @@
             <HBox prefHeight="43.0" prefWidth="440.0">
                <children>
                   <Label prefHeight="22.0" prefWidth="100.0" text="Time" />
-                  <DatePicker maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="300.0">
+                  <DatePicker fx:id="time" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="300.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -52,7 +53,11 @@
             <HBox prefHeight="43.0" prefWidth="440.0">
                <children>
                   <Label prefHeight="22.0" prefWidth="100.0" text="Interval" />
-                  <Spinner editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="300.0">
+                  <fx:define>
+                     <Integer fx:id="min" fx:value="0"/>
+                     <Integer fx:id="max" fx:value="64435"/>
+                  </fx:define>
+                  <Spinner fx:id="interval" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="300.0" min="$min" max="$max">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -69,7 +74,7 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Label>
-                  <DatePicker maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="300.0" />
+                  <DatePicker fx:id="start" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="300.0" />
                </children>
             </HBox>
             <HBox prefHeight="43.0" prefWidth="440.0">
@@ -82,13 +87,13 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Label>
-                  <DatePicker maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="300.0" />
+                  <DatePicker fx:id="end" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="300.0" />
                </children>
             </HBox>
             <ButtonBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="36.0" prefWidth="440.0">
               <buttons>
-                <Button defaultButton="true" mnemonicParsing="false" text="Save" />
-                  <Button cancelButton="true" mnemonicParsing="false" text="Cancel" />
+                <Button onAction="#save" defaultButton="true" mnemonicParsing="false" text="Save" />
+                  <Button onAction="#cancel" cancelButton="true" mnemonicParsing="false" text="Cancel" />
               </buttons>
             </ButtonBar>
          </children>

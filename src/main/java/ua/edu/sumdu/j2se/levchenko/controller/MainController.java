@@ -48,7 +48,6 @@ public class MainController implements Initializable, Controller {
     private final Repository taskRepository;
     private ObservableList<TaskView> taskTableObservableList = FXCollections.observableArrayList();
 
-    private TaskOperationController newTaskController;
     private TaskOperationController editTaskController;
     private TaskOperationController taskDetailsController;
 
@@ -56,10 +55,6 @@ public class MainController implements Initializable, Controller {
 
     public MainController(Repository taskRepository) {
         this.taskRepository = taskRepository;
-    }
-
-    public void setNewTaskController(TaskOperationController newTaskController) {
-        this.newTaskController = newTaskController;
     }
 
     public void setEditTaskController(TaskOperationController editTaskController) {
@@ -145,9 +140,10 @@ public class MainController implements Initializable, Controller {
 
     @FXML
     void newTask(ActionEvent event) {
-        if (newTaskController != null) {
-            newTaskController.showWindow();
-            Task task = newTaskController.getTask();
+        if (editTaskController != null) {
+            editTaskController.setTask(null);
+            editTaskController.showWindow();
+            Task task = editTaskController.getTask();
             if (task != null) {
                 taskRepository.add(task);
                 taskTableObservableList.add(taskModelToView(task));

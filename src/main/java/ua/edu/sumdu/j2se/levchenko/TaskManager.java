@@ -23,7 +23,6 @@ public class TaskManager extends Application {
         MainController mainController = new MainController(new TaskRepository());
 
         mainController.setAboutController(getController("/views/about.fxml", "About", new AboutController()));
-        mainController.setNewTaskController(getController("/views/task.fxml", "New Task", new NewTaskController()));
         mainController.setEditTaskController(getController("/views/task.fxml", "Edit Task", new EditTaskController()));
         mainController.setTaskDetailsController(getController("/views/details.fxml", "Details", new TaskDetailsController()));
 

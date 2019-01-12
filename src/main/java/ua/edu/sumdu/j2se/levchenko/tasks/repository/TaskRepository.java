@@ -2,15 +2,14 @@ package ua.edu.sumdu.j2se.levchenko.tasks.repository;
 
 import org.apache.log4j.Logger;
 
-import ua.edu.sumdu.j2se.levchenko.tasks.Task;
-import ua.edu.sumdu.j2se.levchenko.tasks.TaskIO;
-import ua.edu.sumdu.j2se.levchenko.tasks.TaskList;
-import ua.edu.sumdu.j2se.levchenko.tasks.LinkedTaskList;
+import ua.edu.sumdu.j2se.levchenko.tasks.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Set;
+import java.util.SortedMap;
 
 public class TaskRepository implements Repository {
     private TaskList tasks;
@@ -39,7 +38,7 @@ public class TaskRepository implements Repository {
 
     @Override
     public void clear() {
-        log.debug(String.format("Cleared %d tasks.", this.tasks.size()));
+        log.debug(String.format("Cleared %d task(s).", this.tasks.size()));
         tasks = new LinkedTaskList();
         System.gc(); // collect old tasks list.
     }
@@ -47,7 +46,7 @@ public class TaskRepository implements Repository {
     @Override
     public void load(TaskList tasks) {
         this.tasks = tasks;
-        log.debug(String.format("Loaded %d tasks", this.tasks.size()));
+        log.debug(String.format("Loaded %d task(s).", this.tasks.size()));
     }
 
     @Override
@@ -62,19 +61,24 @@ public class TaskRepository implements Repository {
 
     @Override
     public TaskList getTasksByTime(Date time) {
+        // todo: get tasks from period, and notify about them once in 10 minutes.
         LinkedTaskList tasks = new LinkedTaskList();
         for (Task task: this.tasks) {
-            if (task.isRepeated()) {
-                if (task.getStartTime().equals(time) || task.getEndTime().equals(time)) {
-                    tasks.add(task);
-                }
-            } else {
+            if (!task.isRepeated()) {
                 if (task.getTime().equals(time)) {
                     tasks.add(task);
                 }
+                continue;
+            }
+
+            var repeatedTasks = Tasks.calendar(this.tasks, task.getStartTime(), task.getEndTime());
+            if (repeatedTasks.containsKey(time)) {
+                for (Task repeatedTask: repeatedTasks.get(time)) {
+                    tasks.add(repeatedTask);
+                }
             }
         }
-        log.debug(String.format("Got %d tasks by time %s", tasks.size(), time.toString()));
+        log.debug(String.format("Got %d task(s) by time %s", tasks.size(), time.toString()));
         return tasks;
     }
 
@@ -82,7 +86,7 @@ public class TaskRepository implements Repository {
     public void loadFromFile(File file) throws RepositoryException {
         try {
             TaskIO.readText(this.tasks, file);
-            log.info(String.format("Loaded %d tasks from %s", this.tasks.size(), file.getAbsolutePath()));
+            log.info(String.format("Loaded %d task(s) from %s", this.tasks.size(), file.getAbsolutePath()));
         } catch (IOException e) {
             log.error(String.format("Error happened trying to read file %s", file.getAbsolutePath()), e);
             RepositoryException exception = new RepositoryException("Error reading file.");
