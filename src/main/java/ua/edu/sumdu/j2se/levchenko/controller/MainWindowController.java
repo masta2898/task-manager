@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import ua.edu.sumdu.j2se.levchenko.TaskView;
 import ua.edu.sumdu.j2se.levchenko.tasks.*;
 import ua.edu.sumdu.j2se.levchenko.tasks.repository.Repository;
@@ -45,7 +46,7 @@ public class MainWindowController implements Initializable {
 
     private Stage mainWindow;
     private File tasksFile;
-    private boolean saved = true;
+    private boolean fileChanged = false;
     private final Repository taskRepository;
     private ObservableList<TaskView> taskTableObservableList = FXCollections.observableArrayList();
 
@@ -69,7 +70,7 @@ public class MainWindowController implements Initializable {
 
     @FXML
     void openTasksFile(ActionEvent event) {
-        if (!isSaved()) {
+        if (fileHasChanged()) {
             saveTasks(event);
         }
 
@@ -83,7 +84,7 @@ public class MainWindowController implements Initializable {
 
     @FXML
     void saveTasks(ActionEvent event) {
-        if (saved) {
+        if (!fileChanged) {
             return;
         }
 
@@ -107,7 +108,7 @@ public class MainWindowController implements Initializable {
 
     @FXML
     void close(ActionEvent event) {
-        if (!isSaved()) {
+        if (fileHasChanged()) {
             saveTasks(event);
         }
         mainWindow.close();
@@ -115,7 +116,7 @@ public class MainWindowController implements Initializable {
 
     @FXML
     void newTask(ActionEvent event) {
-        saved = false;
+        fileChanged = true;
         Task t = new Task("Test", new Date());
         t.setActive(true);
         taskRepository.add(t);
@@ -125,7 +126,14 @@ public class MainWindowController implements Initializable {
 
     @FXML
     void editTask(ActionEvent event) {
-        saved = false;
+        TaskView selectedTask = getSelectedTask();
+        if (selectedTask == null) {
+            showWarningMessage("No selected task.", "Select task to perform this operation!");
+            return;
+        }
+
+
+        fileChanged = true;
     }
 
     @FXML
@@ -139,12 +147,16 @@ public class MainWindowController implements Initializable {
         Task task = taskViewToModel(selectedTask);
         taskRepository.remove(task);
         taskTableObservableList.removeAll(selectedTask);
-        saved = false;
+        fileChanged = true;
     }
 
     @FXML
     void showTaskDetails(ActionEvent event) {
-
+        TaskView selectedTask = getSelectedTask();
+        if (selectedTask == null) {
+            showWarningMessage("No selected task.", "Select task to perform this operation!");
+            return;
+        }
     }
 
     @FXML
@@ -179,10 +191,10 @@ public class MainWindowController implements Initializable {
         return tableSelectionModel != null ? tableSelectionModel.getSelectedItem() : null;
     }
 
-    private boolean isSaved() {
-        if (saved) return true;
+    private boolean fileHasChanged() {
+        if (!fileChanged) return false;
         String filename = tasksFile != null ? tasksFile.getName() : "new file";
-        return !askToSaveFile(filename);
+        return askToSaveFile(filename);
     }
 
     private void loadTasksToTable(TaskList tasks) {
@@ -203,7 +215,7 @@ public class MainWindowController implements Initializable {
             status.setText(String.format("Loaded tasks from: %s", filename));
             mainWindow.setTitle(String.format("Task Manager - %s", filename));
 
-            saved = true;
+            fileChanged = false;
             this.tasksFile = tasksFile;
         } catch (RepositoryException e) {
             String errorText = String.format("Error loading tasks from file: %s", tasksFile.getAbsolutePath());
@@ -216,7 +228,7 @@ public class MainWindowController implements Initializable {
         try {
             taskRepository.saveToFile(tasksFile);
             status.setText(String.format("Saved tasks to %s", tasksFile.getAbsolutePath()));
-            saved = true;
+            fileChanged = false;
             this.tasksFile = tasksFile;
         } catch (RepositoryException e) {
             String errorText = String.format("Error saving tasks to file: %s", tasksFile.getAbsolutePath());
@@ -253,6 +265,7 @@ public class MainWindowController implements Initializable {
         alert.setTitle("Warning");
         alert.setHeaderText(message);
         alert.setContentText(details);
+        alert.setResizable(true);
         alert.showAndWait();
     }
 
@@ -261,6 +274,7 @@ public class MainWindowController implements Initializable {
         alert.setTitle("Error");
         alert.setHeaderText(message);
         alert.setContentText(details);
+        alert.setResizable(true);
         alert.showAndWait();
     }
 }
