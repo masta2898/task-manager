@@ -15,7 +15,7 @@
    <graphic>
       <ImageView blendMode="SRC_ATOP" fitHeight="160.0" fitWidth="134.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" x="10.0" y="10.0">
          <image>
-            <Image url="@../cat.png" />
+            <Image url="@../icons/cat.png" />
          </image>
       </ImageView>
    </graphic>
