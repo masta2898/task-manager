@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<DialogPane prefHeight="175.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <graphic>
+      <ImageView blendMode="SRC_ATOP" fitHeight="160.0" fitWidth="134.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" x="10.0" y="10.0">
+         <image>
+            <Image url="@cat.png" />
+         </image>
+      </ImageView>
+   </graphic>
+   <content>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="5.0" prefHeight="21.0" prefWidth="154.0" text="Task Manager" underline="true" wrapText="true">
+               <opaqueInsets>
+                  <Insets right="10.0" />
+               </opaqueInsets>
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="30.0" />
+               </VBox.margin>
+            </Label>
+            <Label prefHeight="16.0" prefWidth="240.0" text="Made by Tanya Levchenko" wrapText="true" />
+            <Label prefHeight="16.0" prefWidth="234.0" text="Version 1.0" wrapText="true">
+               <VBox.margin>
+                  <Insets bottom="30.0" />
+               </VBox.margin>
+            </Label>
+            <ButtonBar prefHeight="122.0" prefWidth="216.0">
+               <buttons>
+                  <Button alignment="CENTER" contentDisplay="BOTTOM" defaultButton="true" graphicTextGap="5.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="64.0" text="OK" onAction="#close"/>
+               </buttons>
+            </ButtonBar>
+         </children>
+      </VBox>
+   </content>
+</DialogPane>

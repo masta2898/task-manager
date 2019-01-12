@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 
-public class MainWindowController implements Initializable, Controller {
+public class MainController implements Initializable, Controller {
     @FXML
     private TableView<TaskView> taskTable;
 
@@ -53,8 +53,8 @@ public class MainWindowController implements Initializable, Controller {
     private Controller taskOperationController;
     private Controller aboutController;
 
-    public MainWindowController(Stage mainWindow, Controller taskOperationController, Controller aboutController,
-                                Repository taskRepository) {
+    public MainController(Stage mainWindow, Controller taskOperationController, Controller aboutController,
+                          Repository taskRepository) {
         this.taskRepository = taskRepository;
         this.mainWindow = mainWindow;
         this.taskOperationController = taskOperationController;
@@ -77,6 +77,11 @@ public class MainWindowController implements Initializable, Controller {
     @Override
     public void setTaskTableObservableList(ObservableList<TaskView> taskTableObservableList) {
         this.taskTableObservableList = taskTableObservableList;
+    }
+
+    @Override
+    public void show() {
+        mainWindow.show();
     }
 
     @FXML
@@ -168,7 +173,7 @@ public class MainWindowController implements Initializable, Controller {
 
     @FXML
     void showAbout(ActionEvent event) {
-
+        aboutController.show();
     }
 
     private Task taskViewToModel(TaskView view) {
