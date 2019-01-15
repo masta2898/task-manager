@@ -92,7 +92,6 @@ public class EditTaskController implements TaskOperationController {
             }
         }
 
-
         this.editTaskWindow.close();
     }
 

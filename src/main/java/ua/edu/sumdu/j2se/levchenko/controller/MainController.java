@@ -94,8 +94,10 @@ public class MainController implements Initializable, Controller {
 
     @FXML
     void openTasksFile(ActionEvent event) {
-        if (fileHasChanged()) {
-            saveTasks(event);
+        if (fileChanged) {
+            if (askToSaveFile()) {
+                saveTasks(event);
+            }
         }
 
         File tasksFile = showOpenTasksFile();
@@ -124,9 +126,12 @@ public class MainController implements Initializable, Controller {
 
     @FXML
     void close(ActionEvent event) {
-        if (fileHasChanged()) {
-            saveTasks(event);
+        if (fileChanged) {
+            if (askToSaveFile()) {
+                saveTasks(event);
+            }
         }
+
         mainWindow.close();
     }
 
@@ -235,12 +240,6 @@ public class MainController implements Initializable, Controller {
         return taskViewToModel(selectedTaskView);
     }
 
-    private boolean fileHasChanged() {
-        if (!fileChanged) return false;
-        String filename = tasksFile != null ? tasksFile.getName() : "new file";
-        return askToSaveFile(filename);
-    }
-
     private void loadTasksToTable(TaskList tasks) {
         taskTableObservableList.clear();
         for (Task task: tasks)  {
@@ -293,7 +292,9 @@ public class MainController implements Initializable, Controller {
         return fileChooser.showSaveDialog(mainWindow);
     }
 
-    private boolean askToSaveFile(String filename) {
+    private boolean askToSaveFile() {
+        String filename = tasksFile != null ? tasksFile.getName() : "new file";
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Do you want to save file?");
         alert.setHeaderText("Save file?");
