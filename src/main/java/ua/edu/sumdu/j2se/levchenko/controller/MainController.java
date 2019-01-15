@@ -99,35 +99,27 @@ public class MainController implements Initializable, Controller {
         }
 
         File tasksFile = showOpenTasksFile();
-        if (tasksFile == null) {
-            return;
+        if (tasksFile != null) {
+            openTasksFile(tasksFile);
         }
-
-        openTasksFile(tasksFile);
     }
 
     @FXML
     void saveTasks(ActionEvent event) {
-        if (!fileChanged) {
-            return;
+        if (fileChanged) {
+            tasksFile = tasksFile == null ? showSaveTasksFile() : tasksFile;
+            if (tasksFile != null) {
+                saveTasksFile(tasksFile);
+            }
         }
-
-        tasksFile = tasksFile == null ? showSaveTasksFile() : tasksFile;
-        if (tasksFile == null) {
-            return;
-        }
-
-        saveTasksFile(tasksFile);
     }
 
     @FXML
     void saveTasksAs(ActionEvent event) {
         File tasksFile = showSaveTasksFile();
-        if (tasksFile == null) {
-            return;
+        if (tasksFile != null) {
+            saveTasksFile(tasksFile);
         }
-
-        saveTasksFile(tasksFile);
     }
 
     @FXML
