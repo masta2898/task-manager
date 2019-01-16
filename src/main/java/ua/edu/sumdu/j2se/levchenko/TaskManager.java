@@ -25,6 +25,7 @@ public class TaskManager extends Application {
         mainController.setAboutController(getController("/views/about.fxml", "About", new AboutController()));
         mainController.setEditTaskController(getController("/views/task.fxml", "Edit Task", new EditTaskController()));
         mainController.setTaskDetailsController(getController("/views/details.fxml", "Details", new TaskDetailsController()));
+        mainController.setTasksPeriodController(getController("/views/period.fxml", "Tasks by period", new TasksPeriodController()));
 
         FXMLLoader loader = new FXMLLoader();
         loader.setController(mainController);

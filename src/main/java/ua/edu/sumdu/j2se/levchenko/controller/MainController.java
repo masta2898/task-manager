@@ -48,10 +48,13 @@ public class MainController implements Initializable, Controller {
     private final Repository taskRepository;
     private ObservableList<TaskView> taskTableObservableList = FXCollections.observableArrayList();
 
+    private Controller aboutController;
+
+    private TasksController tasksPeriodController;
+
     private TaskOperationController editTaskController;
     private TaskOperationController taskDetailsController;
 
-    private Controller aboutController;
 
     public MainController(Repository taskRepository) {
         this.taskRepository = taskRepository;
@@ -67,6 +70,10 @@ public class MainController implements Initializable, Controller {
 
     public void setAboutController(Controller aboutController) {
         this.aboutController = aboutController;
+    }
+
+    public void setTasksPeriodController(TasksController tasksPeriodController) {
+        this.tasksPeriodController = tasksPeriodController;
     }
 
     @Override
