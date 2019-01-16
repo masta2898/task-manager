@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -20,27 +21,28 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                <MenuItem mnemonicParsing="false" text="Open" onAction="#openTasksFile" />
-                <MenuItem mnemonicParsing="false" text="Save" onAction="#saveTasks" />
-                <MenuItem mnemonicParsing="false" text="Save as..." onAction="#saveTasksAs" />
-                <MenuItem mnemonicParsing="false" text="Close" onAction="#close"/>
+                <MenuItem mnemonicParsing="false" onAction="#openTasksFile" text="Open" />
+                <MenuItem mnemonicParsing="false" onAction="#saveTasks" text="Save" />
+                <MenuItem mnemonicParsing="false" onAction="#saveTasksAs" text="Save as..." />
+                <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-                <MenuItem mnemonicParsing="false" text="New task" onAction="#newTask" />
-                <MenuItem mnemonicParsing="false" text="Edit task" onAction="#editTask" />
-                <MenuItem mnemonicParsing="false" text="Delete task" onAction="#deleteTask" />
+                <MenuItem mnemonicParsing="false" onAction="#newTask" text="New task" />
+                <MenuItem mnemonicParsing="false" onAction="#editTask" text="Edit task" />
+                <MenuItem mnemonicParsing="false" onAction="#deleteTask" text="Delete task" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="View">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Show details..." onAction="#showTaskDetails" />
+                  <MenuItem mnemonicParsing="false" onAction="#showTaskDetails" text="Show details..." />
+                  <MenuItem mnemonicParsing="false" onAction="#showTasksByPeriod" text="Show tasks by period" />
                </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" onAction="#showAbout" />
+              <MenuItem mnemonicParsing="false" onAction="#showAbout" text="About" />
             </items>
           </Menu>
         </menus>
@@ -73,17 +75,36 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="113.0" text="Open" onAction="#openTasksFile" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" text="Save" onAction="#saveTasks" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="116.0" text="New task" onAction="#newTask" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="108.0" text="Edit task" onAction="#editTask" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="109.0" text="Delete task" onAction="#deleteTask" />
-            <DatePicker promptText="From" />
-            <DatePicker promptText="To" />
-            <ImageView fitHeight="150.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true">
+            <Button mnemonicParsing="false" onAction="#openTasksFile" prefHeight="26.0" prefWidth="100.0" text="Open">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin></Button>
+            <Button mnemonicParsing="false" onAction="#saveTasks" prefHeight="26.0" prefWidth="100.0" text="Save">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin></Button>
+            <Button mnemonicParsing="false" onAction="#newTask" prefHeight="26.0" prefWidth="100.0" text="New task">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin></Button>
+            <Button mnemonicParsing="false" onAction="#editTask" prefHeight="26.0" prefWidth="100.0" text="Edit task">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin></Button>
+            <Button mnemonicParsing="false" onAction="#deleteTask" prefHeight="26.0" prefWidth="100.0" text="Delete task">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin></Button>
+            <ImageView fitHeight="150.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
                <image>
                   <Image url="@../icons/cat.png" />
                </image>
+               <VBox.margin>
+                  <Insets left="2.0" right="2.0" top="20.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
             </ImageView>
          </children>
       </VBox>

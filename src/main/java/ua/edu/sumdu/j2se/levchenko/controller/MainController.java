@@ -20,6 +20,9 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import static ua.edu.sumdu.j2se.levchenko.controller.ControllerHelper.taskModelToView;
+import static ua.edu.sumdu.j2se.levchenko.controller.ControllerHelper.taskViewToModel;
+
 public class MainController implements Initializable, Controller {
     @FXML
     private TableView<TaskView> taskTable;
@@ -208,30 +211,14 @@ public class MainController implements Initializable, Controller {
     }
 
     @FXML
+    void showTasksByPeriod(ActionEvent event) {
+        this.tasksPeriodController.setRepository(this.taskRepository);
+        this.tasksPeriodController.showWindow();
+    }
+
+    @FXML
     void showAbout(ActionEvent event) {
         aboutController.showWindow();
-    }
-
-    private Task taskViewToModel(TaskView view) {
-        Task task;
-        if (view.getRepeated().equals("Yes")) {
-            task = new Task(view.getTitle(), view.getStart(), view.getEnd(), view.getInterval());
-        } else {
-            task = new Task(view.getTitle(), view.getTime());
-        }
-        task.setActive(view.getActive().equals("Yes"));
-        return task;
-    }
-
-    private TaskView taskModelToView(Task task) {
-        TaskView view;
-        if (task.isRepeated()) {
-            view = new TaskView(task.getTitle(), task.getStartTime(), task.getEndTime(),
-                    task.getRepeatInterval(), task.isActive() ? "Yes" : "No");
-        } else {
-            view = new TaskView(task.getTitle(), task.getTime(), task.isActive() ? "Yes" : "No");
-        }
-        return view;
     }
 
     private TaskView getSelectedTaskView() {
