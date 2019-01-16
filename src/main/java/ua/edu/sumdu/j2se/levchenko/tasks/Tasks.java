@@ -5,7 +5,7 @@ import java.util.*;
 public class Tasks {
 
     public static Iterable<Task> incoming(Iterable<Task> tasks, Date start, Date end) {
-        ArrayList<Task> result = new ArrayList<>();
+        TaskList result = new LinkedTaskList();
         for (Task t : tasks) {
             Date nextTime = t.nextTimeAfter(start);
             if (nextTime != null && nextTime.compareTo(end) <= 0) {
