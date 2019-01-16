@@ -15,6 +15,9 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
+import static ua.edu.sumdu.j2se.levchenko.controller.ControllerHelper.getDate;
+import static ua.edu.sumdu.j2se.levchenko.controller.ControllerHelper.getLocalDate;
+
 public class EditTaskController implements TaskOperationController {
     @FXML
     private TextField title;
@@ -56,7 +59,10 @@ public class EditTaskController implements TaskOperationController {
         if (task != null) {
             title.setText(task.getTitle());
             active.setSelected(task.isActive());
-            if (task.isRepeated()) {
+
+            boolean isRepeated = task.isRepeated();
+            repeated.setSelected(isRepeated);
+            if (isRepeated) {
                 start.setValue(getLocalDate(task.getStartTime()));
                 end.setValue(getLocalDate(task.getEndTime()));
                 interval.getValueFactory().setValue(task.getRepeatInterval());
@@ -79,8 +85,13 @@ public class EditTaskController implements TaskOperationController {
         if (repeated.isSelected()) {
             Date start = getDate(this.start);
             Date end = getDate(this.end);
-            int interval = this.interval.getValue();
+
             if (start != null && end != null) {
+                if (start.after(end)) {
+                    return;
+                }
+
+                int interval = this.interval.getValue();
                 task = new Task(title, start, end, interval);
                 task.setActive(active.isSelected());
             }
@@ -109,19 +120,6 @@ public class EditTaskController implements TaskOperationController {
         interval.setDisable(!isRepeated);
 
         time.setDisable(isRepeated);
-    }
-
-    private Date getDate(DatePicker view) {
-        LocalDate localDate = view.getValue();
-        if (localDate != null) {
-            Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-            return Date.from(instant);
-        }
-        return null;
-    }
-
-    private LocalDate getLocalDate(Date date) {
-        return LocalDate.ofInstant(date.toInstant(), ZoneId.systemDefault());
     }
 
     private void clearForm() {
