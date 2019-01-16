@@ -50,6 +50,7 @@ public class TaskDetailsController implements TaskOperationController {
 
     @Override
     public void showWindow() {
+
         if (task == null) {
             return;
         }
@@ -62,7 +63,7 @@ public class TaskDetailsController implements TaskOperationController {
         timeBox.setVisible(!taskIsRepeated);
         active.setSelected(task.isActive());
 
-        if (taskIsRepeated) {
+        if (!taskIsRepeated) {
             time.setText(task.getTime().toString());
         } else {
             start.setText(task.getStartTime().toString());
