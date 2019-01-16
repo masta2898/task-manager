@@ -15,7 +15,7 @@ public interface Repository {
 
     Task getById(int id);
     TaskList getAll();
-    TaskList getTasksByTime(Date time);
+    TaskList getTasksByPeriod(Date time, Date to);
 
     void loadFromFile(File file) throws RepositoryException;
     void saveToFile(File file) throws RepositoryException;

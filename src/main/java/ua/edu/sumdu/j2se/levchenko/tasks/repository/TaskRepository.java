@@ -8,8 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.Set;
-import java.util.SortedMap;
 
 public class TaskRepository implements Repository {
     private TaskList tasks;
@@ -60,25 +58,9 @@ public class TaskRepository implements Repository {
     }
 
     @Override
-    public TaskList getTasksByTime(Date time) {
-        // todo: get tasks from period, and notify about them once in 10 minutes.
-        LinkedTaskList tasks = new LinkedTaskList();
-        for (Task task: this.tasks) {
-            if (!task.isRepeated()) {
-                if (task.getTime().equals(time)) {
-                    tasks.add(task);
-                }
-                continue;
-            }
-
-            var repeatedTasks = Tasks.calendar(this.tasks, task.getStartTime(), task.getEndTime());
-            if (repeatedTasks.containsKey(time)) {
-                for (Task repeatedTask: repeatedTasks.get(time)) {
-                    tasks.add(repeatedTask);
-                }
-            }
-        }
-        log.debug(String.format("Got %d task(s) by time %s", tasks.size(), time.toString()));
+    public TaskList getTasksByPeriod(Date from, Date to) {
+        TaskList tasks = (TaskList) Tasks.incoming(this.tasks, from, to);
+        log.debug(String.format("Got %d task(s) by period %s - %s", tasks.size(), from.toString(), to.toString()));
         return tasks;
     }
 
