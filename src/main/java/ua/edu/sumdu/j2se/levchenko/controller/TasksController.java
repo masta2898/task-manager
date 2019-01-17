@@ -8,6 +8,7 @@ public abstract class TasksController extends Controller {
     void setRepository(final Repository repository) {
         this.repository = repository;
     }
+    
     Repository getRepository() {
         return repository;
     }
