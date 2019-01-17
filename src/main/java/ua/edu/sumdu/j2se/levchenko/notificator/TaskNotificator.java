@@ -8,11 +8,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class Notificator extends Thread {
+public class TaskNotificator extends Notificator {
     private final Repository repository;
     private final NotificationObserverController notificationObserver;
 
-    public Notificator(final Repository repository, NotificationObserverController notificationObserver) {
+    public TaskNotificator(final Repository repository, NotificationObserverController notificationObserver) {
         this.repository = repository;
         this.notificationObserver = notificationObserver;
         setDaemon(true);

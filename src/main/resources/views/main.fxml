@@ -67,10 +67,19 @@
                </content>
             </ScrollPane>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </BorderPane.margin>
       </VBox>
    </center>
    <bottom>
-      <Label fx:id="status" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="16.0" prefWidth="593.0" text="Status" BorderPane.alignment="CENTER_LEFT" />
+      <Label fx:id="status" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="16.0" prefWidth="593.0" text="Status" wrapText="true" BorderPane.alignment="CENTER_LEFT">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </BorderPane.margin></Label>
    </bottom>
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">

@@ -42,8 +42,23 @@
             </HBox>
             <HBox prefHeight="43.0" prefWidth="440.0">
                <children>
-                  <Label prefHeight="22.0" prefWidth="100.0" text="Time" />
-                  <DatePicker fx:id="time" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="300.0">
+                  <Label prefHeight="22.0" prefWidth="100.0" text="HH:mm Date" />
+                  <fx:define>
+                     <Integer fx:id="minTime" fx:value="0"/>
+                     <Integer fx:id="maxHours" fx:value="23"/>
+                     <Integer fx:id="maxMinutes" fx:value="59"/>
+                  </fx:define>
+                  <Spinner fx:id="timeHours" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="70.0" min="$minTime" max="$maxHours">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Spinner>
+                  <Spinner fx:id="timeMinutes" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="70.0" min="$minTime" max="$maxMinutes">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Spinner>
+                  <DatePicker fx:id="time" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="140.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -69,25 +84,50 @@
             </HBox>
             <HBox prefHeight="43.0" prefWidth="440.0">
                <children>
-                  <Label prefHeight="22.0" prefWidth="100.0" text="Start">
-                     <HBox.margin>
+                  <Label prefHeight="22.0" prefWidth="100.0" text="HH:mm Start">
+                     <padding>
                         <Insets right="10.0" />
-                     </HBox.margin>
+                     </padding>
                   </Label>
-                  <DatePicker fx:id="start" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="300.0" />
+                  <Spinner fx:id="startHours" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="70.0" min="$minTime" max="$maxHours">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Spinner>
+                  <Spinner fx:id="startMinutes" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="70.0" min="$minTime" max="$maxMinutes">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Spinner>
+                  <DatePicker fx:id="start" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="140.0">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </DatePicker>
                </children>
             </HBox>
             <HBox prefHeight="43.0" prefWidth="440.0">
                <children>
-                  <Label prefHeight="22.0" prefWidth="100.0" text="End">
+                  <Label prefHeight="22.0" prefWidth="100.0" text="HH:mm End">
                      <padding>
                         <Insets right="10.0" />
                      </padding>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
                   </Label>
-                  <DatePicker fx:id="end" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="300.0" />
+                  <Spinner fx:id="endHours" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="70.0" min="$minTime" max="$maxHours">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Spinner>
+                  <Spinner fx:id="endMinutes" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="70.0" min="$minTime" max="$maxMinutes">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Spinner>
+                  <DatePicker fx:id="end" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="140.0">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </DatePicker>
                </children>
             </HBox>
             <ButtonBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="36.0" prefWidth="440.0">

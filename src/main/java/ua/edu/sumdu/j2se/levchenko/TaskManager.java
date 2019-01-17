@@ -5,13 +5,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import ua.edu.sumdu.j2se.levchenko.controller.*;
+import ua.edu.sumdu.j2se.levchenko.notificator.Notificator;
+import ua.edu.sumdu.j2se.levchenko.notificator.TaskNotificator;
+import ua.edu.sumdu.j2se.levchenko.tasks.repository.Repository;
 import ua.edu.sumdu.j2se.levchenko.tasks.repository.TaskRepository;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 public class TaskManager extends Application {
     public static void main(String[] args) {
@@ -20,12 +28,15 @@ public class TaskManager extends Application {
 
     @Override
     public void start(Stage mainWindow) throws Exception {
-        MainController mainController = new MainController(new TaskRepository());
+        Repository repository = new TaskRepository();
 
-        mainController.setAboutController(getController("/views/about.fxml", "About", new AboutController()));
-        mainController.setEditTaskController(getController("/views/task.fxml", "Edit Task", new EditTaskController()));
-        mainController.setTaskDetailsController(getController("/views/details.fxml", "Details", new TaskDetailsController()));
-        mainController.setTasksPeriodController(getController("/views/period.fxml", "Tasks by period", new TasksPeriodController()));
+        MainController mainController = new MainControllerBuilder()
+                .setTaskRepository(repository)
+                .setAboutController(getController("/views/about.fxml", "About", new AboutController()))
+                .setEditTaskController(getController("/views/task.fxml", "Edit Task", new EditTaskController()))
+                .setTaskDetailsController(getController("/views/details.fxml", "Details", new TaskDetailsController()))
+                .setTasksPeriodController(getController("/views/period.fxml", "Tasks by period", new TasksPeriodController()))
+                .createMainController();
 
         FXMLLoader loader = new FXMLLoader();
         loader.setController(mainController);
@@ -37,8 +48,18 @@ public class TaskManager extends Application {
         mainWindow.setScene(new Scene(content));
         mainWindow.getIcons().add(new Image(getClass().getResourceAsStream("/icons/cat.png")));
 
+        Media notificationSound = new Media(getClass().getResource("/sounds/notification.mp3").toExternalForm());
+        MediaPlayer notificationSoundPlayer = new MediaPlayer(notificationSound);
+        mainController.setNotificationSound(notificationSoundPlayer);
+
+        Notificator notificator = new TaskNotificator(repository, mainController);
+        ExecutorService threadPool = Executors.newFixedThreadPool(2, runnable -> notificator);
+        threadPool.execute(notificator);
+
         mainController.setWindow(mainWindow);
         mainController.showWindow();
+
+        threadPool.shutdown();
     }
 
     private <C extends Controller> C getController(String filename, String title, C controller) throws IOException {

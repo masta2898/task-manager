@@ -8,9 +8,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 import ua.edu.sumdu.j2se.levchenko.TaskView;
+import ua.edu.sumdu.j2se.levchenko.notificator.Notificator;
 import ua.edu.sumdu.j2se.levchenko.tasks.*;
 import ua.edu.sumdu.j2se.levchenko.tasks.repository.Repository;
 import ua.edu.sumdu.j2se.levchenko.tasks.repository.RepositoryException;
@@ -19,11 +19,13 @@ import java.io.File;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static ua.edu.sumdu.j2se.levchenko.controller.ControllerHelper.taskModelToView;
 import static ua.edu.sumdu.j2se.levchenko.controller.ControllerHelper.taskViewToModel;
 
-public class MainController extends Controller implements Initializable {
+public class MainController extends NotificationObserverController implements Initializable {
     @FXML
     private TableView<TaskView> taskTable;
 
@@ -47,7 +49,9 @@ public class MainController extends Controller implements Initializable {
 
     private File tasksFile;
     private boolean fileChanged = false;
+
     private final Repository taskRepository;
+
     private ObservableList<TaskView> taskTableObservableList = FXCollections.observableArrayList();
 
     private Controller aboutController;
@@ -57,24 +61,13 @@ public class MainController extends Controller implements Initializable {
     private TaskOperationController editTaskController;
     private TaskOperationController taskDetailsController;
 
-    public MainController(Repository taskRepository) {
+    MainController(Repository taskRepository, Controller aboutController, TaskOperationController editTaskController,
+                   TaskOperationController taskDetailsController, TasksController tasksPeriodController) {
         this.taskRepository = taskRepository;
-    }
-
-    public void setEditTaskController(TaskOperationController editTaskController) {
-        this.editTaskController = editTaskController;
-    }
-
-    public void setTaskDetailsController(TaskOperationController taskDetailsController) {
-        this.taskDetailsController = taskDetailsController;
-    }
-
-    public void setAboutController(Controller aboutController) {
         this.aboutController = aboutController;
-    }
-
-    public void setTasksPeriodController(TasksController tasksPeriodController) {
         this.tasksPeriodController = tasksPeriodController;
+        this.editTaskController = editTaskController;
+        this.taskDetailsController = taskDetailsController;
     }
 
     @Override
@@ -91,13 +84,18 @@ public class MainController extends Controller implements Initializable {
     }
 
     @Override
-    public void setWindow(Stage window) {
-        this.window = window;
+    public void showWindow() {
+        window.show();
     }
 
     @Override
-    public void showWindow() {
-        window.show();
+    public void showNotification(TaskList tasks) {
+        for (Task task: tasks) {
+            notificationSoundPlayer.play();
+            taskDetailsController.setTask(task);
+            taskDetailsController.window.setTitle("Notification");
+            taskDetailsController.showWindow();
+        }
     }
 
     @FXML

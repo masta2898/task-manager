@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <DialogPane prefHeight="216.0" prefWidth="297.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <header>
       <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="5.0" text="Title" textAlignment="CENTER" underline="true" wrapText="true">
@@ -33,7 +32,7 @@
                         <Insets />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="time" prefHeight="16.0" prefWidth="150.0" text="date" wrapText="true">
+                  <Label fx:id="time" prefHeight="16.0" prefWidth="150.0" wrapText="true">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -50,19 +49,19 @@
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Label prefWidth="100.0" text="From:" />
-                              <Label fx:id="start" text="date" />
+                              <Label fx:id="start" wrapText="true" />
                            </children>
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Label prefWidth="100.0" text="To:" />
-                              <Label fx:id="end" text="date" />
+                              <Label fx:id="end" wrapText="true" />
                            </children>
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Label prefHeight="16.0" prefWidth="100.0" text="Interval:" />
-                              <Label fx:id="interval" text="number" />
+                              <Label fx:id="interval" wrapText="true" />
                            </children>
                         </HBox>
                      </children>

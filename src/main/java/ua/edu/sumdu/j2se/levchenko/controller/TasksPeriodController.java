@@ -26,8 +26,6 @@ public class TasksPeriodController extends TasksController {
     private TableView<TaskView> taskTable;
 
     @FXML
-    private TableColumn active;
-    @FXML
     private TableColumn title;
     @FXML
     private TableColumn repeated;
@@ -46,7 +44,6 @@ public class TasksPeriodController extends TasksController {
     public void showWindow() {
         clearForm();
 
-        active.setCellValueFactory(new PropertyValueFactory<>("active"));
         title.setCellValueFactory(new PropertyValueFactory<>("title"));
         repeated.setCellValueFactory(new PropertyValueFactory<>("repeated"));
         time.setCellValueFactory(new PropertyValueFactory<>("time"));

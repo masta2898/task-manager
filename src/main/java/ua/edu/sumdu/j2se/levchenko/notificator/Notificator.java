@@ -1,4 +1,6 @@
 package ua.edu.sumdu.j2se.levchenko.notificator;
 
-public interface Notificator {
+import javafx.concurrent.Task;
+
+public abstract class Notificator extends Thread {
 }

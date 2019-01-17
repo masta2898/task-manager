@@ -1,5 +1,6 @@
 package ua.edu.sumdu.j2se.levchenko.controller;
 
+import ua.edu.sumdu.j2se.levchenko.notificator.Notificator;
 import ua.edu.sumdu.j2se.levchenko.tasks.repository.Repository;
 
 public class MainControllerBuilder {
@@ -35,8 +36,6 @@ public class MainControllerBuilder {
     }
 
     public MainController createMainController() {
-        return new MainController(taskRepository, aboutController, tasksPeriodController, editTaskController, taskDetailsController);
+        return new MainController(taskRepository, aboutController, editTaskController, taskDetailsController, tasksPeriodController);
     }
-
-
 }
