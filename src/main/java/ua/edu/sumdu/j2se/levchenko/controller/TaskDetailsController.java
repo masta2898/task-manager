@@ -4,10 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-import ua.edu.sumdu.j2se.levchenko.tasks.Task;
 
-public class TaskDetailsController implements TaskOperationController {
+public class TaskDetailsController extends TaskOperationController {
     @FXML
     private Label title;
 
@@ -30,27 +28,8 @@ public class TaskDetailsController implements TaskOperationController {
     @FXML
     private CheckBox repeated;
 
-    private Task task;
-    private Stage detailsWindow;
-
-    @Override
-    public void setTask(Task task) {
-        this.task = task;
-    }
-
-    @Override
-    public Task getTask() {
-        return task;
-    }
-
-    @Override
-    public void setWindow(Stage window) {
-        this.detailsWindow = window;
-    }
-
     @Override
     public void showWindow() {
-
         if (task == null) {
             return;
         }
@@ -71,7 +50,7 @@ public class TaskDetailsController implements TaskOperationController {
             interval.setText(String.valueOf(task.getRepeatInterval()));
         }
 
-        detailsWindow.setResizable(false);
-        detailsWindow.showAndWait();
+        window.setResizable(false);
+        window.showAndWait();
     }
 }

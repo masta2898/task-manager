@@ -8,16 +8,15 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
+
 import ua.edu.sumdu.j2se.levchenko.TaskView;
 import ua.edu.sumdu.j2se.levchenko.tasks.Task;
 import ua.edu.sumdu.j2se.levchenko.tasks.TaskList;
-import ua.edu.sumdu.j2se.levchenko.tasks.repository.Repository;
 
 import static ua.edu.sumdu.j2se.levchenko.controller.ControllerHelper.getDate;
 import static ua.edu.sumdu.j2se.levchenko.controller.ControllerHelper.taskModelToView;
 
-public class TasksPeriodController implements TasksController {
+public class TasksPeriodController extends TasksController {
     @FXML
     private DatePicker from;
     @FXML
@@ -43,19 +42,6 @@ public class TasksPeriodController implements TasksController {
 
     private ObservableList<TaskView> taskTableObservableList = FXCollections.observableArrayList();
 
-    private Stage tasksPeriodWindow;
-    private Repository taskRepository;
-
-    @Override
-    public void setRepository(final Repository repository) {
-        taskRepository = repository;
-    }
-
-    @Override
-    public void setWindow(Stage window) {
-        tasksPeriodWindow = window;
-    }
-
     @Override
     public void showWindow() {
         clearForm();
@@ -69,19 +55,19 @@ public class TasksPeriodController implements TasksController {
         interval.setCellValueFactory(new PropertyValueFactory<>("interval"));
         taskTable.setItems(taskTableObservableList);
 
-        tasksPeriodWindow.setResizable(false);
-        tasksPeriodWindow.showAndWait();
+        window.setResizable(false);
+        window.showAndWait();
     }
 
     @FXML
     void apply(ActionEvent event) {
-        if (from.getValue() == null || to.getValue() == null || taskRepository == null) {
+        if (from.getValue() == null || to.getValue() == null || repository == null) {
             return;
         }
 
         if (from.getValue().isBefore(to.getValue())) {
             taskTableObservableList.clear();
-            TaskList tasks = taskRepository.getTasksByPeriod(getDate(from), getDate(to));
+            TaskList tasks = repository.getTasksByPeriod(getDate(from), getDate(to));
             for (Task task: tasks) {
                 taskTableObservableList.add(taskModelToView(task));
             }
@@ -90,7 +76,7 @@ public class TasksPeriodController implements TasksController {
 
     @FXML
     void cancel(ActionEvent event) {
-        tasksPeriodWindow.close();
+        window.close();
     }
 
     private void clearForm() {

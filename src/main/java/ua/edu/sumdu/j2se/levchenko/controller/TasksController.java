@@ -2,6 +2,13 @@ package ua.edu.sumdu.j2se.levchenko.controller;
 
 import ua.edu.sumdu.j2se.levchenko.tasks.repository.Repository;
 
-public interface TasksController extends Controller {
-    void setRepository(final Repository repository);
+public abstract class TasksController extends Controller {
+    protected Repository repository;
+
+    void setRepository(final Repository repository) {
+        this.repository = repository;
+    }
+    Repository getRepository() {
+        return repository;
+    }
 }

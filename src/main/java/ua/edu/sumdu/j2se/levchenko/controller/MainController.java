@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 import static ua.edu.sumdu.j2se.levchenko.controller.ControllerHelper.taskModelToView;
 import static ua.edu.sumdu.j2se.levchenko.controller.ControllerHelper.taskViewToModel;
 
-public class MainController implements Initializable, Controller {
+public class MainController extends Controller implements Initializable {
     @FXML
     private TableView<TaskView> taskTable;
 
@@ -45,7 +45,6 @@ public class MainController implements Initializable, Controller {
     @FXML
     private Label status;
 
-    private Stage mainWindow;
     private File tasksFile;
     private boolean fileChanged = false;
     private final Repository taskRepository;
@@ -57,7 +56,6 @@ public class MainController implements Initializable, Controller {
 
     private TaskOperationController editTaskController;
     private TaskOperationController taskDetailsController;
-
 
     public MainController(Repository taskRepository) {
         this.taskRepository = taskRepository;
@@ -94,12 +92,12 @@ public class MainController implements Initializable, Controller {
 
     @Override
     public void setWindow(Stage window) {
-        this.mainWindow = window;
+        this.window = window;
     }
 
     @Override
     public void showWindow() {
-        mainWindow.show();
+        window.show();
     }
 
     @FXML
@@ -142,7 +140,7 @@ public class MainController implements Initializable, Controller {
             }
         }
 
-        mainWindow.close();
+        window.close();
     }
 
     @FXML
@@ -250,7 +248,7 @@ public class MainController implements Initializable, Controller {
 
             String filename = tasksFile.getAbsolutePath();
             status.setText(String.format("Loaded tasks from: %s", filename));
-            mainWindow.setTitle(String.format("Task Manager - %s", filename));
+            window.setTitle(String.format("Task Manager - %s", filename));
 
             fileChanged = false;
             this.tasksFile = tasksFile;
@@ -277,13 +275,13 @@ public class MainController implements Initializable, Controller {
     private File showOpenTasksFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose tasks file.");
-        return fileChooser.showOpenDialog(mainWindow);
+        return fileChooser.showOpenDialog(window);
     }
 
     private File showSaveTasksFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose where to save tasks.");
-        return fileChooser.showSaveDialog(mainWindow);
+        return fileChooser.showSaveDialog(window);
     }
 
     private boolean askToSaveFile() {

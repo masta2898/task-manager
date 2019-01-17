@@ -6,19 +6,15 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import ua.edu.sumdu.j2se.levchenko.tasks.Task;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 
 import static ua.edu.sumdu.j2se.levchenko.controller.ControllerHelper.getDate;
 import static ua.edu.sumdu.j2se.levchenko.controller.ControllerHelper.getLocalDate;
 
-public class EditTaskController implements TaskOperationController {
+public class EditTaskController extends TaskOperationController {
     @FXML
     private TextField title;
     @FXML
@@ -33,24 +29,6 @@ public class EditTaskController implements TaskOperationController {
     private DatePicker start;
     @FXML
     private DatePicker end;
-
-    private Task task;
-    private Stage editTaskWindow;
-
-    @Override
-    public void setTask(Task task) {
-        this.task = task;
-    }
-
-    @Override
-    public Task getTask() {
-        return task;
-    }
-
-    @Override
-    public void setWindow(Stage window) {
-        this.editTaskWindow = window;
-    }
 
     @Override
     public void showWindow() {
@@ -72,7 +50,7 @@ public class EditTaskController implements TaskOperationController {
         }
 
         setRepeated(new ActionEvent());
-        this.editTaskWindow.showAndWait();
+        window.showAndWait();
     }
 
     @FXML
@@ -103,12 +81,12 @@ public class EditTaskController implements TaskOperationController {
             }
         }
 
-        this.editTaskWindow.close();
+        window.close();
     }
 
     @FXML
     void cancel(ActionEvent event) {
-        this.editTaskWindow.close();
+        window.close();
     }
 
     @FXML
