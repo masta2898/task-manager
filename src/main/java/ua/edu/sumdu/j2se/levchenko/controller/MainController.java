@@ -168,7 +168,7 @@ public class MainController extends NotificationObserverController implements In
         editTaskController.setTask(selectedTask);
         editTaskController.showWindow();
         Task task = editTaskController.getTask();
-        if (task.equals(oldTask)) {
+        if (task == null || task.equals(oldTask)) {
             return;
         }
 
