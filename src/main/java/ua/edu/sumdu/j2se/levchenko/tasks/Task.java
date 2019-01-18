@@ -93,6 +93,7 @@ public class Task implements Cloneable {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Task task = (Task) obj;
+        if (isRepeated() != task.isRepeated()) return false;
         if (isRepeated() && task.isRepeated()) {
             if (active != task.active) return false;
             if (!start.equals(task.getStartTime())) return false;
