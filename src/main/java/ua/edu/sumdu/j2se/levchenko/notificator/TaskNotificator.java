@@ -20,15 +20,14 @@ public class TaskNotificator extends Notificator {
 
     @Override
     public void run() {
-        long delay = 1;
-        long oneMinuteInMillis = 60 * 1000;
+        long delay = 60 * 1000;
 
         while (true) {
             Calendar now = Calendar.getInstance();
             long nowInMillis = now.getTimeInMillis();
-            Date afterTenMinutes = new Date(nowInMillis + (delay * oneMinuteInMillis));
+            Date afterDelay = new Date(nowInMillis + delay);
 
-            TaskList tasks = repository.getTasksByPeriod(now.getTime(), afterTenMinutes);
+            TaskList tasks = repository.getTasksByPeriod(now.getTime(), afterDelay);
             notificationObserver.showNotification(tasks);
 
             try {
