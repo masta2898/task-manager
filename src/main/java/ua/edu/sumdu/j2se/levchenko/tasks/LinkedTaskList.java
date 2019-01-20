@@ -12,6 +12,38 @@ public class LinkedTaskList extends TaskList implements Cloneable {
     public LinkedTaskList() {
     }
 
+    public LinkedTaskList getHead() {
+        return head;
+    }
+
+    public void setHead(LinkedTaskList head) {
+        this.head = head;
+    }
+
+    public Task getValue() {
+        return value;
+    }
+
+    public void setValue(Task value) {
+        this.value = value;
+    }
+
+    public LinkedTaskList getTail() {
+        return tail;
+    }
+
+    public void setTail(LinkedTaskList tail) {
+        this.tail = tail;
+    }
+
+    public LinkedTaskList getNext() {
+        return next;
+    }
+
+    public void setNext(LinkedTaskList next) {
+        this.next = next;
+    }
+
     public LinkedTaskList(Task task) {
         value = task;
     }
@@ -161,7 +193,7 @@ public class LinkedTaskList extends TaskList implements Cloneable {
 
         public MyIterator() {
             current = null;
-            next = head;
+            next = getHead();
             callNext = false;
         }
 
@@ -176,9 +208,9 @@ public class LinkedTaskList extends TaskList implements Cloneable {
                 throw new NoSuchElementException();
             }
 
-            Task temp = (Task) next.value;
+            Task temp = (Task) next.getValue();
             current = next;
-            next = next.next;
+            next = next.getNext();
             callNext = true;
             return temp;
         }
@@ -189,7 +221,7 @@ public class LinkedTaskList extends TaskList implements Cloneable {
                 throw new IllegalStateException();
             }
 
-            LinkedTaskList.this.remove(current.value);
+            LinkedTaskList.this.remove(current.getValue());
 
             callNext = false;
         }
