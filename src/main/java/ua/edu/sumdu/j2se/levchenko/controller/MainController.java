@@ -1,5 +1,6 @@
 package ua.edu.sumdu.j2se.levchenko.controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -91,10 +92,12 @@ public class MainController extends NotificationObserverController implements In
     @Override
     public void showNotification(TaskList tasks) {
         for (Task task: tasks) {
-            notificationSoundPlayer.play();
-            taskDetailsController.setTask(task);
-            taskDetailsController.window.setTitle("Notification");
-            taskDetailsController.showWindow();
+            Platform.runLater(() -> {
+                notificationSoundPlayer.play();
+                taskDetailsController.setTask(task);
+                taskDetailsController.window.setTitle("Notification");
+                taskDetailsController.showWindow();
+            });
         }
     }
 

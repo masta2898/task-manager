@@ -31,7 +31,7 @@ public class TaskNotificator extends Notificator {
             notificationObserver.showNotification(tasks);
 
             try {
-                TimeUnit.MINUTES.sleep(delay);
+                TimeUnit.MILLISECONDS.sleep(delay);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -17,9 +17,6 @@ import ua.edu.sumdu.j2se.levchenko.tasks.repository.Repository;
 import ua.edu.sumdu.j2se.levchenko.tasks.repository.TaskRepository;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 
 public class TaskManager extends Application {
     public static void main(String[] args) {
@@ -53,13 +50,10 @@ public class TaskManager extends Application {
         mainController.setNotificationSound(notificationSoundPlayer);
 
         Notificator notificator = new TaskNotificator(repository, mainController);
-        ExecutorService threadPool = Executors.newFixedThreadPool(2, runnable -> notificator);
-        threadPool.execute(notificator);
+        notificator.start();
 
         mainController.setWindow(mainWindow);
         mainController.showWindow();
-
-        threadPool.shutdown();
     }
 
     private <C extends Controller> C getController(String filename, String title, C controller) throws IOException {
