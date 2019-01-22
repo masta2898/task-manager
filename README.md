@@ -29,4 +29,5 @@ This project doesn't use git flow, so you can contribute to the main branch.
 This project uses maven to build, pack and getting dependencies.
 
 ## Authors
-**Tanya Levchenko** - main developer - [tanyalev](https://github.com/tanyalev/)
+**Tanya Levchenko** - business logic developer - [tanyalev](https://github.com/tanyalev/) \
+**Master** - GUI, controllers, and other stuff developer, main holder, code reviewer, pizza to refactored code converter, The War Master, The Master of Callous, The Time Lord >:) [masta2898](https://github.com/masta2898)
